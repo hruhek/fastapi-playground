@@ -17,3 +17,7 @@ Run the live server.
 ```shell
 uvicorn tutorial.main:app --reload
 ```
+
+## Docs
+
+Go to [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
