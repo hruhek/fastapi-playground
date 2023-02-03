@@ -41,14 +41,16 @@ async def get_model(model_name: ModelName):
 
 @app.get("/items/")
 async def read_items(skip: int = 0, limit: int = 10):
-    return fake_items_db[skip: skip + limit]
+    return fake_items_db[skip : skip + limit]
 
 
 async def update_item(item, q, short):
     if q:
         item.update({"q": q})
     if not short:
-        item.update({"description": "This is an amazing item that has a long description"})
+        item.update(
+            {"description": "This is an amazing item that has a long description"}
+        )
 
 
 @app.get("/items/{item_id}")
@@ -59,7 +61,9 @@ async def read_item(item_id: str, q: Optional[str] = None, short: bool = False):
 
 
 @app.get("/users/{user_id}/items/{item_id}")
-async def read_user_item(user_id: int, item_id: str, needy: str, q: Optional[str] = None, short: bool = False):
+async def read_user_item(
+    user_id: int, item_id: str, needy: str, q: Optional[str] = None, short: bool = False
+):
     item = {"item_id": item_id, "owner_id": user_id}
     await update_item(item, q, short)
     item.update({"needy": needy})
@@ -76,7 +80,9 @@ async def create_item(item: Item):
 
 
 @app.post("/items/{item_id}")
-async def create_item(item_id: str, item: Item, q: Optional[str] = None, short: bool = False):
+async def create_item(
+    item_id: str, item: Item, q: Optional[str] = None, short: bool = False
+):
     result = {"item_id": item_id, **item.dict()}
     await update_item(result, q, short)
     return result
